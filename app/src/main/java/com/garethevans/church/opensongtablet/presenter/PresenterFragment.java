@@ -422,9 +422,25 @@ public class PresenterFragment extends Fragment {
             } else if ((landscape && myMaterialSwitch==myView.blankScreenSide) || myMaterialSwitch==myView.blankScreen) {
                 mainActivityInterface.getPresenterSettings().setBlankscreenOn(b);
                 displayInterface.updateDisplay("showBlankscreen");
-                } else if ((landscape && myMaterialSwitch==myView.blackScreenSide) || myMaterialSwitch==myView.blackScreen) {
+                // Send blank screen command to connected clients if host
+                if (b) {
+                    mainActivityInterface.getNearbyActions().getNearbySendPayloads().sendCommandIfHost(
+                            mainActivityInterface.getNearbyActions().blankScreenOn);
+                } else {
+                    mainActivityInterface.getNearbyActions().getNearbySendPayloads().sendCommandIfHost(
+                            mainActivityInterface.getNearbyActions().blankScreenOff);
+                }
+            } else if ((landscape && myMaterialSwitch==myView.blackScreenSide) || myMaterialSwitch==myView.blackScreen) {
                 mainActivityInterface.getPresenterSettings().setBlackscreenOn(b);
                 displayInterface.updateDisplay("showBlackscreen");
+                // Send black screen command to connected clients if host
+                if (b) {
+                    mainActivityInterface.getNearbyActions().getNearbySendPayloads().sendCommandIfHost(
+                            mainActivityInterface.getNearbyActions().blackScreenOn);
+                } else {
+                    mainActivityInterface.getNearbyActions().getNearbySendPayloads().sendCommandIfHost(
+                            mainActivityInterface.getNearbyActions().blackScreenOff);
+                }
             }
         }
     }

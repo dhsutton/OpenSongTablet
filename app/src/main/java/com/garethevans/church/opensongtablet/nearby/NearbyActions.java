@@ -31,6 +31,12 @@ public class NearbyActions {
     public String autoscrollStop = "___autoscrollstop___";
     public String autoscrollDecrease = "___autoscrolldecrease___";
 
+    // Blank and black screen identifiers in bytes payloads
+    public String blankScreenOn = "___blankscreenon___";
+    public String blankScreenOff = "___blankscreenoff___";
+    public String blackScreenOn = "___blackscreenon___";
+    public String blackScreenOff = "___blackscreenoff___";
+
     // Song section identifiers in bytes payloads
     public String sectionTag = "___section___";
 

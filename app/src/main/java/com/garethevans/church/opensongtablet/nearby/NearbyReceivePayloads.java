@@ -11,6 +11,7 @@ import com.garethevans.church.opensongtablet.R;
 import com.garethevans.church.opensongtablet.interfaces.MainActivityInterface;
 import com.garethevans.church.opensongtablet.interfaces.NearbyReturnActionsInterface;
 import com.garethevans.church.opensongtablet.preferences.AreYouSureBottomSheet;
+import com.garethevans.church.opensongtablet.secondarydisplay.SecondaryDisplay;
 import com.garethevans.church.opensongtablet.songprocessing.Song;
 import com.google.android.gms.nearby.connection.Payload;
 import com.google.android.gms.nearby.connection.PayloadCallback;
@@ -160,6 +161,14 @@ public class NearbyReceivePayloads {
                                         autoscrollIncrease();
                                     } else if (what.equals(nearbyActions.autoscrollDecrease)) {
                                         autoscrollDecrease();
+                                    } else if (what.equals(nearbyActions.blankScreenOn)) {
+                                        blankScreenOn();
+                                    } else if (what.equals(nearbyActions.blankScreenOff)) {
+                                        blankScreenOff();
+                                    } else if (what.equals(nearbyActions.blackScreenOn)) {
+                                        blackScreenOn();
+                                    } else if (what.equals(nearbyActions.blackScreenOff)) {
+                                        blackScreenOff();
                                     } else if (what.startsWith(nearbyActions.scrollByTag)) {
                                         scrollByProportion(nearbyJson);
                                     } else if (what.startsWith(nearbyActions.scrollToTag)) {
@@ -269,6 +278,56 @@ public class NearbyReceivePayloads {
     private void autoscrollDecrease() {
         if (nearbyReceiveHostAutoscroll && !nearbyActions.getNearbyConnectionManagement().getIsHost()) {
             mainActivityInterface.getAutoscroll().slowDownAutoscroll();
+        }
+    }
+
+    // Blank and black screen actions
+    private void blankScreenOn() {
+        if (!nearbyActions.getNearbyConnectionManagement().getIsHost()) {
+            mainActivityInterface.getPresenterSettings().setBlankscreenOn(true);
+            if (mainActivityInterface.getIsSecondaryDisplaying()) {
+                for (SecondaryDisplay secondaryDisplay : mainActivityInterface.getSecondaryDisplays()) {
+                    if (secondaryDisplay != null) {
+                        secondaryDisplay.showBlankScreen();
+                    }
+                }
+            }
+        }
+    }
+    private void blankScreenOff() {
+        if (!nearbyActions.getNearbyConnectionManagement().getIsHost()) {
+            mainActivityInterface.getPresenterSettings().setBlankscreenOn(false);
+            if (mainActivityInterface.getIsSecondaryDisplaying()) {
+                for (SecondaryDisplay secondaryDisplay : mainActivityInterface.getSecondaryDisplays()) {
+                    if (secondaryDisplay != null) {
+                        secondaryDisplay.showBlankScreen();
+                    }
+                }
+            }
+        }
+    }
+    private void blackScreenOn() {
+        if (!nearbyActions.getNearbyConnectionManagement().getIsHost()) {
+            mainActivityInterface.getPresenterSettings().setBlackscreenOn(true);
+            if (mainActivityInterface.getIsSecondaryDisplaying()) {
+                for (SecondaryDisplay secondaryDisplay : mainActivityInterface.getSecondaryDisplays()) {
+                    if (secondaryDisplay != null) {
+                        secondaryDisplay.showBlackScreen();
+                    }
+                }
+            }
+        }
+    }
+    private void blackScreenOff() {
+        if (!nearbyActions.getNearbyConnectionManagement().getIsHost()) {
+            mainActivityInterface.getPresenterSettings().setBlackscreenOn(false);
+            if (mainActivityInterface.getIsSecondaryDisplaying()) {
+                for (SecondaryDisplay secondaryDisplay : mainActivityInterface.getSecondaryDisplays()) {
+                    if (secondaryDisplay != null) {
+                        secondaryDisplay.showBlackScreen();
+                    }
+                }
+            }
         }
     }
 
